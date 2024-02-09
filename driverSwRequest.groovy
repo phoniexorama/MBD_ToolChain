@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'WinLocalagent'
+        label 'WinLocalagent' //Label for Windows agent
     }
 
     environment {
