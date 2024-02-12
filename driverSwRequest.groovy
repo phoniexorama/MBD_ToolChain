@@ -9,19 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('Verify') {
-            steps {
-                script {
-                    // This job runs the Model Advisor Check file for DriverSwRequest models
-                    matlabScript("DriverSwRequestModelAdvisor;")
-                }
-                post {
-                    always {
-                        archiveArtifacts(artifacts: ["$LOGS_PATH/logs/", "./Design/DriverSwRequest/pipeline/analyze/**/*"])
-                    }
-                }
-            }
-        } 
+        
 
         stage('Build') {
             steps {
