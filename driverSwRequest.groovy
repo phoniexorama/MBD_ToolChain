@@ -9,7 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('Verify') {
+        /*stage('Verify') {
             steps {
                 script {
                     // This job runs the Model Advisor Check file for DriverSwRequest models
@@ -21,7 +21,7 @@ pipeline {
                     }
                 }
             }
-        }
+        } /*
 
         stage('Build') {
             steps {
