@@ -1,8 +1,8 @@
 pipeline {
     agent {
-        label 'WinLocalagent' //Label for Windows agent
+        label 'WinLocalagent'
     }
-    
+
     environment {
         LOGS_PATH = "./Code"
         ARTIFACTS_DOWNLOAD_PATH = "C:/Users/${env.GIT_USER_LOGIN}/Downloads"
@@ -10,34 +10,19 @@ pipeline {
 
     stages {
         stage('Child pipelines') {
-            parallel {
-                stage('Driver Sw Request') {
-                    steps {
-                        script {
-                            buildJobIfFilesChanged('driverSwRequest', ['Design/DriverSwRequest/**/*', 'driverSwRequest.groovy', 'Jenkinsfile', 'tools/**/*'])
-                        }
-                    }
-                }
-                stage('Cruise Control Mode') {
-                    steps {
-                        script {
-                            buildJobIfFilesChanged('cruiseControlMode', ['Design/CruiseControlMode/**/*', 'cruiseControlMode.groovy', 'Jenkinsfile', 'tools/**/*'])
-                        }
-                    }
-                }
-                stage('Target Speed Throttle') {
-                    steps {
-                        script {
-                            buildJobIfFilesChanged('targetSpeedThrottle', ['Design/TargetSpeedThrottle/**/*', 'targetSpeedThrottle.groovy', 'Jenkinsfile', 'tools/**/*'])
-                        }
-                    }
-                }
-                stage('CRS Controller') {
-                    steps {
-                        script {
-                            buildJobIfFilesChanged('crs_controller', ['Design/crs_controller/**/*', 'crs_controller.groovy', 'Jenkinsfile', 'tools/**/*'])
-                        }
-                    }
+            steps {
+                script {
+                    // Define child pipeline for driverSwRequest if specific files are changed
+                    buildJobIfFilesChanged('driverSwRequest', ['Design/DriverSwRequest/**/*', 'driverSwRequest.groovy', 'Jenkinsfile', 'tools/**/*'])
+
+                    // Define child pipeline for cruiseControlMode if specific files are changed
+                    buildJobIfFilesChanged('cruiseControlMode', ['Design/CruiseControlMode/**/*', 'cruiseControlMode.groovy', 'Jenkinsfile', 'tools/**/*'])
+
+                    // Define child pipeline for targetSpeedThrottle if specific files are changed
+                    buildJobIfFilesChanged('targetSpeedThrottle', ['Design/TargetSpeedThrottle/**/*', 'targetSpeedThrottle.groovy', 'Jenkinsfile', 'tools/**/*'])
+
+                    // Define child pipeline for crs_controller if specific files are changed
+                    buildJobIfFilesChanged('crs_controller_pipeline', ['Design/crs_controller/**/*', 'crs_controller.groovy', 'Jenkinsfile', 'tools/**/*'])
                 }
             }
         }
