@@ -1,8 +1,5 @@
 pipeline {
-    agent {
-        label 'WinLocalagent' //Label for Windows agent
-    }
-
+    agent none
     environment {
         LOGS_PATH = "./Code"
         ARTIFACTS_DOWNLOAD_PATH = "C:/Users/${env.GITLAB_USER_LOGIN}/Downloads"
@@ -10,6 +7,9 @@ pipeline {
 
     stages {
         stage('verify') {
+            agent {
+                label 'LocalMatlabServer'
+            }
             steps {
                 script {
                     // This job executes the Model Advisor Checks for the model
@@ -24,6 +24,9 @@ pipeline {
         }
 
         stage('build') {
+            agent {
+                label 'LocalMatlabServer'
+            }
             steps {
                 script {
                     // This job performs code generation on the model
@@ -38,6 +41,9 @@ pipeline {
         }
 
         stage('testing') {
+            agent {
+                label 'LocalMatlabServer'
+            }
             steps {
                 script {
                     // This job executes the functional tests defined in the collection
@@ -53,6 +59,9 @@ pipeline {
         }
 
         stage('package') {
+            agent {
+                label 'LocalMatlabServer'
+            }
             steps {
                 script {
                     // The summary report is generated which shows results from the previous stages.
@@ -70,6 +79,9 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent {
+                label 'LocalMatlabServer'
+            }
             steps {
                 echo "Any deployments of code can be made here"
                 echo "All artifacts of previous stage can be found here"
